@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,12 +109,14 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 
 DATABASES = {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': os.environ['DATABASE_NAME'],
-    'USER': os.environ['DATABASE_USER'],
-    'PASSWORD': os.environ['DATABASE_PASSWORD'],
-    'HOST': os.environ['DATABASE_HOST'],
-    'PORT': os.environ['DATABASE_PORT'],
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DATABASE_NAME'],
+        'USER': os.environ['DATABASE_USER'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT': os.environ['DATABASE_PORT'],
+    }
 }
 
 # Password validation
@@ -159,11 +161,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Model
-AUTH_USER_MODEL = "api.User"
+AUTH_USER_MODEL = "core.User"
+
+# Pointing to channels to routing configurations
+ASGI_APPLICATION = "server.asgi.application"
 
 # Assigning in memory channel layer
 # if DEBUG:
-channel_layer =  {"BACKEND": "channels.layers.InMemoryChannelLayer"}
+channel_layer = {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 # else:
 #     channel_layer = {
 #         "BACKEND": "channels_redis.core.RedisChannelLayer",
