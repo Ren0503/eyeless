@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "channels",
 
     "core",
+    "video_signal",
 ]
 
 REST_FRAMEWORK = {
